@@ -11172,17 +11172,23 @@ class Responce {
 
 module.exports = Responce;
 
-},{"./util":13}],9:[function(require,module,exports){
+},{"./util":16}],9:[function(require,module,exports){
 const e1 = require('./exercices/e1');
 const e2 = require('./exercices/e2');
+const e3 = require('./exercices/e3');
+const e4 = require('./exercices/e4');
+const e5 = require('./exercices/e5');
 
 
 module.exports = [
   e1,
   e2,
+  e3,
+  e4,
+  e5,
 ];
 
-},{"./exercices/e1":10,"./exercices/e2":11}],10:[function(require,module,exports){
+},{"./exercices/e1":10,"./exercices/e2":11,"./exercices/e3":12,"./exercices/e4":13,"./exercices/e5":14}],10:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11192,8 +11198,8 @@ module.exports = better({
   startWith: '',
   text: {
     fr: {
-      title: 'cree une variable',
-      text: 'cree la variable x egale a 1',
+      title: 'Cree une variable',
+      text: 'Cree la variable x egale a 1',
     },
 
     en: {
@@ -11203,7 +11209,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":12}],11:[function(require,module,exports){
+},{"./../toBetterExercice":15}],11:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11224,7 +11230,72 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":12}],12:[function(require,module,exports){
+},{"./../toBetterExercice":15}],12:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    x: 20,
+    y: 2,
+  },
+  startWith: 'let x = 20',
+  text: {
+    fr: {
+      title: 'Assignier a une varribale',
+      text: 'Assigner la valleur de x divisé par 10 a y',
+    },
+
+    en: {
+      title: 'Assignie to var',
+      text: 'Assignie x divided by 10 to y',
+    },
+  },
+});
+
+},{"./../toBetterExercice":15}],13:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    x: [],
+  },
+  startWith: '',
+  text: {
+    fr: {
+      title: 'Cree un tableau',
+      text: 'Creer le tableau x',
+    },
+
+    en: {
+      title: 'Create an array',
+      text: 'create the array x',
+    },
+  },
+});
+
+},{"./../toBetterExercice":15}],14:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    max: 38,
+    table: [1, 9, 8, 13, 19, 27, 38, 6, 22],
+  },
+  startWith: 'const table = [1,9,8,13,19,27,38,6,22];',
+  text: {
+    fr: {
+      title: 'Parcourir un tableau',
+      text: 'Trouver la valeur max dans le tableau et la stoker dans une variable max',
+    },
+
+    en: {
+      title: 'Iterate array list',
+      text: 'Find the max value of table table and store it in a variable called max',
+    },
+  },
+});
+
+},{"./../toBetterExercice":15}],15:[function(require,module,exports){
 const Lang = require('./Lang');
 
 function toBetterExercice(e) {
@@ -11253,7 +11324,7 @@ function toBetterExercice(e) {
 
 module.exports = toBetterExercice;
 
-},{"./Lang":7}],13:[function(require,module,exports){
+},{"./Lang":7}],16:[function(require,module,exports){
 const isArray = arr => Array.isArray(arr);
 
 const isString = str => typeof str === 'string' || str instanceof String;

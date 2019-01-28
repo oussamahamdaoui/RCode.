@@ -7,8 +7,8 @@ module.exports = better({
   startWith: '',
   text: {
     fr: {
-      title: 'cree une variable',
-      text: 'cree la variable x egale a 1',
+      title: 'Cree une variable',
+      text: 'Cree la variable x egale a 1',
     },
 
     en: {
