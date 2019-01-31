@@ -11110,12 +11110,12 @@ class Exercice {
     let res = {};
     try {
       res = Function('Rule', codeToExecute)(); // eslint-disable-line
+      if (this.expectedResponce.equqls(res)) {
+        this.emit('solve');
+      } else if (this.solved) {
+        this.emit('unsolve');
+      }
     } catch (_) {} // eslint-disable-line
-    if (this.expectedResponce.equqls(res)) {
-      this.emit('solve');
-    } else if (this.solved) {
-      this.emit('unsolve');
-    }
   }
 
   on(str, f) {
@@ -11153,15 +11153,21 @@ class Responce {
     this.expected = expected;
   }
 
+
   equqls(responce) {
     const expectKeys = Object.keys(this.expected);
     let ret = true;
     expectKeys.forEach((key) => {
       if (isFunction(this.expected[key])) {
-        const resArray = this.expected[key](responce[key]);
-        if (looseEqual(resArray[0], resArray[1]) === false) {
-          ret = false;
-        }
+        const arrayOfTests = this.expected[key](responce[key]);
+        console.log(arrayOfTests);
+        arrayOfTests.forEach((test) => {
+          const resp = test[0];
+          const exp = test[1];
+          if (!looseEqual(resp, exp)) {
+            ret = false;
+          }
+        });
       } else if (looseEqual(this.expected[key], responce[key]) === false) {
         ret = false;
       }
@@ -11172,12 +11178,17 @@ class Responce {
 
 module.exports = Responce;
 
-},{"./util":16}],9:[function(require,module,exports){
+},{"./util":21}],9:[function(require,module,exports){
 const e1 = require('./exercices/e1');
 const e2 = require('./exercices/e2');
 const e3 = require('./exercices/e3');
 const e4 = require('./exercices/e4');
 const e5 = require('./exercices/e5');
+const e6 = require('./exercices/e6');
+const e7 = require('./exercices/e7');
+const e8 = require('./exercices/e8');
+const e9 = require('./exercices/e9');
+const e10 = require('./exercices/e10');
 
 
 module.exports = [
@@ -11186,9 +11197,14 @@ module.exports = [
   e3,
   e4,
   e5,
+  e6,
+  e7,
+  e8,
+  e9,
+  e10,
 ];
 
-},{"./exercices/e1":10,"./exercices/e2":11,"./exercices/e3":12,"./exercices/e4":13,"./exercices/e5":14}],10:[function(require,module,exports){
+},{"./exercices/e1":10,"./exercices/e10":11,"./exercices/e2":12,"./exercices/e3":13,"./exercices/e4":14,"./exercices/e5":15,"./exercices/e6":16,"./exercices/e7":17,"./exercices/e8":18,"./exercices/e9":19}],10:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11209,7 +11225,31 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":15}],11:[function(require,module,exports){
+},{"./../toBetterExercice":20}],11:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    animal: Obj => [
+      [Object.prototype.hasOwnProperty.call(new Obj(), 'name'), true],
+      [Object.prototype.hasOwnProperty.call(new Obj(), 'type'), true],
+    ],
+  },
+  startWith: '',
+  text: {
+    fr: {
+      title: 'Cree une class',
+      text: 'Cree la animal qui a les propriétés name et type',
+    },
+
+    en: {
+      title: 'Create a class',
+      text: 'Create the class animal which has the proprietys name and type',
+    },
+  },
+});
+
+},{"./../toBetterExercice":20}],12:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11219,18 +11259,18 @@ module.exports = better({
   startWith: 'let x = 0',
   text: {
     fr: {
-      title: 'Ajouter a une varriable',
-      text: 'ajouter 1 a x',
+      title: 'Modifier une varriable',
+      text: 'Ajouter un a x',
     },
 
     en: {
-      title: 'Create a variable',
-      text: 'crate the variable x equals 1',
+      title: 'Change a variable',
+      text: 'Add one to x',
     },
   },
 });
 
-},{"./../toBetterExercice":15}],12:[function(require,module,exports){
+},{"./../toBetterExercice":20}],13:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11252,7 +11292,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":15}],13:[function(require,module,exports){
+},{"./../toBetterExercice":20}],14:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11273,7 +11313,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":15}],14:[function(require,module,exports){
+},{"./../toBetterExercice":20}],15:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11289,13 +11329,98 @@ module.exports = better({
     },
 
     en: {
-      title: 'Iterate array list',
+      title: 'Iterate array over arrays',
       text: 'Find the max value of table table and store it in a variable called max',
     },
   },
 });
 
-},{"./../toBetterExercice":15}],15:[function(require,module,exports){
+},{"./../toBetterExercice":20}],16:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    max: 38,
+    table: [1, 9, 8, 13, 19, 27, 38, 6, 22],
+  },
+  startWith: 'const table = [1,9,8,13,19,27,38,6,22];',
+  text: {
+    fr: {
+      title: 'Parcourir un tableau',
+      text: 'Trouver la valeur max dans le tableau et la stoker dans une variable max',
+    },
+
+    en: {
+      title: 'Iterate over arrays',
+      text: 'Find the max value of table table and store it in a variable called max',
+    },
+  },
+});
+
+},{"./../toBetterExercice":20}],17:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    sum: f => [[f(123, 1, 2, 3, 5), 134]],
+  },
+  startWith: '',
+  text: {
+    fr: {
+      title: 'Ecrire une fonction',
+      text: 'Créer la fontion sum qui retourne la somme de N nombres',
+    },
+
+    en: {
+      title: 'Iterate array list',
+      text: 'Create a function sum witch returns the sum of N numbers',
+    },
+  },
+});
+
+},{"./../toBetterExercice":20}],18:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    getMax: f => [[f([1, 2, 3]), 3], [f([0, 1]), 1]],
+  },
+  startWith: 'const table = [1,9,8,13,19,27,38,6,22];',
+  text: {
+    fr: {
+      title: 'Ecrire une fonction avec des parametres',
+      text: 'Ecrivez la fonction getMax qui retourne la valeur maximale d\'un tableau',
+    },
+
+    en: {
+      title: 'Write a function with parameters',
+      text: 'Write the function getMax witch returns the maximum value of a list',
+    },
+  },
+});
+
+},{"./../toBetterExercice":20}],19:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    animal: obj => [[Object.prototype.hasOwnProperty.call(obj, 'name'), true], [Object.prototype.hasOwnProperty.call(obj, 'type'), true]],
+  },
+  startWith: '',
+  text: {
+    fr: {
+      title: 'Cree un objet',
+      text: 'Cree l\'objet animal qui a les propriétés name et type',
+    },
+
+    en: {
+      title: 'Create an object',
+      text: 'Create the oject animal which has the proprietys name and type',
+    },
+  },
+});
+
+},{"./../toBetterExercice":20}],20:[function(require,module,exports){
 const Lang = require('./Lang');
 
 function toBetterExercice(e) {
@@ -11324,7 +11449,7 @@ function toBetterExercice(e) {
 
 module.exports = toBetterExercice;
 
-},{"./Lang":7}],16:[function(require,module,exports){
+},{"./Lang":7}],21:[function(require,module,exports){
 const isArray = arr => Array.isArray(arr);
 
 const isString = str => typeof str === 'string' || str instanceof String;

@@ -67,12 +67,12 @@ test('test function complexe', () => {
   };
 
   const toBe = {
-    d: f => [f(1, 2), {
+    d: f => [[f(1, 2), {
       a: 1,
       b: 2,
-    }],
+    }]],
   };
 
-  const resp = new Responce(responce);
-  expect(resp.equqls(toBe)).toBe(true);
+  const resp = new Responce(toBe);
+  expect(resp.equqls(responce)).toBe(true);
 });

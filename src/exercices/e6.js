@@ -13,7 +13,7 @@ module.exports = better({
     },
 
     en: {
-      title: 'Iterate array over arrays',
+      title: 'Iterate over arrays',
       text: 'Find the max value of table table and store it in a variable called max',
     },
   },

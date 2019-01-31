@@ -7,13 +7,13 @@ module.exports = better({
   startWith: 'let x = 0',
   text: {
     fr: {
-      title: 'Ajouter a une varriable',
-      text: 'ajouter 1 a x',
+      title: 'Modifier une varriable',
+      text: 'Ajouter un a x',
     },
 
     en: {
-      title: 'Create a variable',
-      text: 'crate the variable x equals 1',
+      title: 'Change a variable',
+      text: 'Add one to x',
     },
   },
 });

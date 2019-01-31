@@ -81,12 +81,12 @@ class Exercice {
     let res = {};
     try {
       res = Function('Rule', codeToExecute)(); // eslint-disable-line
+      if (this.expectedResponce.equqls(res)) {
+        this.emit('solve');
+      } else if (this.solved) {
+        this.emit('unsolve');
+      }
     } catch (_) {} // eslint-disable-line
-    if (this.expectedResponce.equqls(res)) {
-      this.emit('solve');
-    } else if (this.solved) {
-      this.emit('unsolve');
-    }
   }
 
   on(str, f) {
