@@ -13,7 +13,8 @@ const $ = (selector) => {
 const exercieParent = $('#exercices');
 
 const updateScore = () => {
-  $('#score > .percent').innerText = e.filter(ex => ex.solved === true).length;
+  const score = Math.floor(e.filter(ex => ex.solved === true).length / e.length * 100);
+  $('#score > .percent').innerText = score;
 };
 
 exercices.forEach((ex) => {
@@ -11160,7 +11161,6 @@ class Responce {
     expectKeys.forEach((key) => {
       if (isFunction(this.expected[key])) {
         const arrayOfTests = this.expected[key](responce[key]);
-        console.log(arrayOfTests);
         arrayOfTests.forEach((test) => {
           const resp = test[0];
           const exp = test[1];
