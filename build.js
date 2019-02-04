@@ -52,7 +52,7 @@ $('.header>div>button').addEventListener('click', () => {
   scrollIt($('.container>div')[0], 500, 'easeInOutQuart');
 });
 
-},{"./src/Exercice":7,"./src/Saver":10,"./src/exercices":11,"./src/util":25}],2:[function(require,module,exports){
+},{"./src/Exercice":7,"./src/Saver":10,"./src/exercices":11,"./src/util":26}],2:[function(require,module,exports){
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: https://codemirror.net/LICENSE
 
@@ -11241,7 +11241,7 @@ class Exercice {
 
 module.exports = Exercice;
 
-},{"./Console":6,"./Responce":9,"./textConsts":23,"./util":25,"codemirror":4,"codemirror/addon/edit/closebrackets":2,"codemirror/addon/edit/matchbrackets":3,"codemirror/mode/javascript/javascript":5}],8:[function(require,module,exports){
+},{"./Console":6,"./Responce":9,"./textConsts":24,"./util":26,"codemirror":4,"codemirror/addon/edit/closebrackets":2,"codemirror/addon/edit/matchbrackets":3,"codemirror/mode/javascript/javascript":5}],8:[function(require,module,exports){
 const { isFunction } = require('./util');
 
 class Lang {
@@ -11262,7 +11262,7 @@ class Lang {
 
 module.exports = Lang;
 
-},{"./util":25}],9:[function(require,module,exports){
+},{"./util":26}],9:[function(require,module,exports){
 const {
   looseEqual,
   isFunction,
@@ -11297,7 +11297,7 @@ class Responce {
 
 module.exports = Responce;
 
-},{"./util":25}],10:[function(require,module,exports){
+},{"./util":26}],10:[function(require,module,exports){
 const STORAGE_KEY = 'ex';
 class Saver {
   constructor() {
@@ -11336,6 +11336,7 @@ const e8 = require('./exercices/e8');
 const e9 = require('./exercices/e9');
 const e10 = require('./exercices/e10');
 const e11 = require('./exercices/e11');
+const e12 = require('./exercices/e12');
 
 
 module.exports = [
@@ -11350,9 +11351,10 @@ module.exports = [
   e9,
   e10,
   e11,
+  e12,
 ];
 
-},{"./exercices/e1":12,"./exercices/e10":13,"./exercices/e11":14,"./exercices/e2":15,"./exercices/e3":16,"./exercices/e4":17,"./exercices/e5":18,"./exercices/e6":19,"./exercices/e7":20,"./exercices/e8":21,"./exercices/e9":22}],12:[function(require,module,exports){
+},{"./exercices/e1":12,"./exercices/e10":13,"./exercices/e11":14,"./exercices/e12":15,"./exercices/e2":16,"./exercices/e3":17,"./exercices/e4":18,"./exercices/e5":19,"./exercices/e6":20,"./exercices/e7":21,"./exercices/e8":22,"./exercices/e9":23}],12:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11376,7 +11378,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],13:[function(require,module,exports){
+},{"./../toBetterExercice":25}],13:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11400,7 +11402,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],14:[function(require,module,exports){
+},{"./../toBetterExercice":25}],14:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11424,7 +11426,37 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],15:[function(require,module,exports){
+},{"./../toBetterExercice":25}],15:[function(require,module,exports){
+const better = require('./../toBetterExercice');
+
+module.exports = better({
+  expexted: {
+    bounded: f => [
+      [f(5, 10, 11), 10],
+      [f(5, 10, 6), 6],
+      [f(5, 10, 4), 5],
+    ],
+  },
+  startingCode: '',
+  maxChars: 70,
+  text: {
+    fr: {
+      title: 'Cree une fonction LVL 2',
+      text: `Cree la fonction 'bounded(borneSup, borneInf, val)' qui retourne la valeur bornée ex:
+      bounded(5, 10, 15) = 10, bounded(5, 10, 1) = 5, bounded(5, 10, 7) = 7
+      `,
+    },
+
+    en: {
+      title: 'Create a function LVL 2',
+      text: `Create the function 'bounded(upperBound, bottomBound, value)' which returns the bounded value ex:
+      bounded(5, 10, 15) = 10, bounded(5, 10, 1) = 5, bounded(5, 10, 7) = 7
+      `,
+    },
+  },
+});
+
+},{"./../toBetterExercice":25}],16:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11445,7 +11477,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],16:[function(require,module,exports){
+},{"./../toBetterExercice":25}],17:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11468,7 +11500,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],17:[function(require,module,exports){
+},{"./../toBetterExercice":25}],18:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11492,7 +11524,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],18:[function(require,module,exports){
+},{"./../toBetterExercice":25}],19:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11514,7 +11546,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],19:[function(require,module,exports){
+},{"./../toBetterExercice":25}],20:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11536,7 +11568,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],20:[function(require,module,exports){
+},{"./../toBetterExercice":25}],21:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11558,7 +11590,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],21:[function(require,module,exports){
+},{"./../toBetterExercice":25}],22:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11580,7 +11612,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],22:[function(require,module,exports){
+},{"./../toBetterExercice":25}],23:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11601,7 +11633,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":24}],23:[function(require,module,exports){
+},{"./../toBetterExercice":25}],24:[function(require,module,exports){
 const Lang = require('./Lang');
 
 const USE_ONLY = new Lang({
@@ -11613,7 +11645,7 @@ module.exports = {
   USE_ONLY,
 };
 
-},{"./Lang":8}],24:[function(require,module,exports){
+},{"./Lang":8}],25:[function(require,module,exports){
 const Lang = require('./Lang');
 
 function toBetterExercice(e) {
@@ -11647,7 +11679,7 @@ function toBetterExercice(e) {
 
 module.exports = toBetterExercice;
 
-},{"./Lang":8}],25:[function(require,module,exports){
+},{"./Lang":8}],26:[function(require,module,exports){
 const isArray = arr => Array.isArray(arr);
 
 const isString = str => typeof str === 'string' || str instanceof String;

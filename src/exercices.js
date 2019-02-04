@@ -9,6 +9,7 @@ const e8 = require('./exercices/e8');
 const e9 = require('./exercices/e9');
 const e10 = require('./exercices/e10');
 const e11 = require('./exercices/e11');
+const e12 = require('./exercices/e12');
 
 
 module.exports = [
@@ -23,4 +24,5 @@ module.exports = [
   e9,
   e10,
   e11,
+  e12,
 ];
