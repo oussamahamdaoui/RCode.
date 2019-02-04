@@ -6,14 +6,19 @@ const codeMirror = require('codemirror');
 const Responce = require('./Responce');
 const Console = require('./Console');
 const { looseEqual } = require('./util');
+const { USE_ONLY } = require('./textConsts');
 
 
-const createExerciceNode = (text, startingCode = '', startingHtml = '') => {
+const createExerciceNode = (text, startingCode = '', startingHtml = '', maxChars) => {
   const div = document.createElement('div');
   const textHtml = `
   <div class="exercice">
     <h1>${text.title} <span></span></h1>
     <p>${text.text}</p>
+    <div class="${maxChars === Infinity ? 'hide' : ''}">
+      <div>${USE_ONLY.toString([maxChars])}</div>
+      <span class="charCouner">${startingCode.length}</span> / <span class="limit">${maxChars}</span>
+    </div>
     <div class="document">${startingHtml}</div>
     <div class="console"></div>
     <textarea>${startingCode}</textarea>
@@ -27,8 +32,12 @@ const createExerciceNode = (text, startingCode = '', startingHtml = '') => {
 class Exercice {
   constructor(obj) {
     this.expected = obj.expected;
+    this.maxChars = obj.maxChars;
     this.parentNode = obj.parentNode;
-    this.me = createExerciceNode(obj.renderObject, obj.startingCode, obj.startingHtml);
+    this.me = createExerciceNode(obj.renderObject,
+      obj.startingCode,
+      obj.startingHtml,
+      obj.maxChars);
     this.expectedResponce = new Responce(obj.expected);
     this.solved = false;
 
@@ -47,7 +56,6 @@ class Exercice {
       theme: 'one-dark',
     });
     this.codeMirror.on('cursorActivity', this._mirrorChange.bind(this)); // eslint-disable-line
-    this.codeMirror.setSize(null, 500);
   }
 
   // / available events
@@ -94,13 +102,18 @@ class Exercice {
     let res = {};
     try {
       res = Function('console','document', codeToExecute)(this.console, this.fakeDocument); // eslint-disable-line
-      if (this.expectedResponce.equqls(res)) {
+      if (this.expectedResponce.equqls(res) && e.getValue().length <= this.maxChars) {
         this.emit('solve');
       } else if (this.solved) {
         this.emit('unsolve');
       }
     } catch (_) {console.log(_)} // eslint-disable-line
     this.console.empty();
+    this.updateCharcount();
+  }
+
+  updateCharcount() {
+    this.me.querySelector('.charCouner').innerHTML = this.codeMirror.getValue().length;
   }
 
   on(str, f) {

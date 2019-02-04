@@ -21,7 +21,12 @@ function toBetterExercice(e) {
   texts.forEach((key) => {
     ret[key] = new Lang(ret[key]);
   });
-  return { expexted: e.expexted, text: ret, startingCode: e.startingCode };
+  return {
+    expexted: e.expexted,
+    text: ret,
+    startingCode: e.startingCode,
+    maxChars: e.maxChars || Infinity,
+  };
 }
 
 module.exports = toBetterExercice;

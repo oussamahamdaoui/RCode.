@@ -6,6 +6,7 @@ module.exports = better({
     y: 2,
   },
   startingCode: 'let x = 20',
+  maxChars: 21,
   text: {
     fr: {
       title: 'Assignier a une varribale',

@@ -2,13 +2,10 @@
 const Exercice = require('./src/Exercice');
 const exercices = require('./src/exercices');
 const Saver = require('./src/Saver');
+const { $, scrollIt } = require('./src/util');
 
 const e = [];
 const saver = new Saver();
-const $ = (selector) => {
-  const res = document.querySelectorAll(selector);
-  return res.length === 1 ? res[0] : res;
-};
 
 
 const exercieParent = $('#exercices');
@@ -29,6 +26,7 @@ exercices.forEach((ex, i) => {
       startingCode: savedValues.startingCode || ex.startingCode,
       startithHtml: ex.startithHtml,
       expected: ex.expexted,
+      maxChars: ex.maxChars,
     });
     exercice.solved = savedValues.solved;
     exercice.renderState(savedValues.solved);
@@ -39,6 +37,7 @@ exercices.forEach((ex, i) => {
       startingCode: ex.startingCode,
       startithHtml: ex.startithHtml,
       expected: ex.expexted,
+      maxChars: ex.maxChars,
     });
   }
   exercice.on('solve', updateScore);
@@ -46,3 +45,8 @@ exercices.forEach((ex, i) => {
   e.push(exercice);
 });
 updateScore();
+
+
+$('.header>div>button').addEventListener('click', () => {
+  scrollIt($('.container>div')[0], 500, 'easeInOutQuart');
+});

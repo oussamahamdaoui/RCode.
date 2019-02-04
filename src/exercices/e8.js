@@ -5,6 +5,7 @@ module.exports = better({
     getMax: f => [[f([1, 2, 3]), 3], [f([0, 1]), 1]],
   },
   startingCode: 'const table = [1,9,8,13,19,27,38,6,22];',
+  maxChars: 77,
   text: {
     fr: {
       title: 'Ecrire une fonction avec des parametres',

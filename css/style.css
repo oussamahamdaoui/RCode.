@@ -117,6 +117,21 @@ h1, p{
   transform: translate(0,-50%);
   background-attachment: fixed;
 }
+.header>div>button{
+  height:50px;
+  width:100px;
+  border:none;
+  color: var(--white);
+  background-color: var(--valid);
+  outline: none;
+  transition: all 150ms ease-in;
+  cursor: pointer;
+}
+
+.header>div>button:hover{
+  color: var(--valid);
+  background-color: var(--white);
+}
 
 
 #menu{
@@ -204,4 +219,8 @@ h1, p{
     top:70px;
     text-align: center;
   }
+}
+
+.hide{
+  display: none !important;
 }

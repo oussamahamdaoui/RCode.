@@ -5,6 +5,7 @@ module.exports = better({
     sum: f => [[f(123, 1, 2, 3, 5), 134]],
   },
   startingCode: '',
+  maxChars: 52,
   text: {
     fr: {
       title: 'Ecrire une fonction',
