@@ -4,7 +4,7 @@ module.exports = better({
   expexted: {
     x: 1,
   },
-  startWith: 'let x = 0',
+  startingCode: 'let x = 0',
   text: {
     fr: {
       title: 'Modifier une varriable',

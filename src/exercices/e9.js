@@ -4,7 +4,7 @@ module.exports = better({
   expexted: {
     animal: obj => [[Object.prototype.hasOwnProperty.call(obj, 'name'), true], [Object.prototype.hasOwnProperty.call(obj, 'type'), true]],
   },
-  startWith: '',
+  startingCode: '',
   text: {
     fr: {
       title: 'Cree un objet',

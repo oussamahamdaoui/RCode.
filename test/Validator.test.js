@@ -76,3 +76,27 @@ test('test function complexe', () => {
   const resp = new Responce(toBe);
   expect(resp.equqls(responce)).toBe(true);
 });
+
+test('test class', () => {
+  const responce = {
+    animal: class animal {
+      constructor(name, type) {
+        this.name = name;
+        this.type = type;
+      }
+
+      toString() {
+        return `My name is ${this.name} and I am a ${this.type}`;
+      }
+    },
+  };
+
+  const toBe = {
+    animal: F => [
+      [new F('oussama', 'chien').toString(), 'My name is oussama and I am a chien'],
+    ],
+  };
+
+  const resp = new Responce(toBe);
+  expect(resp.equqls(responce)).toBe(true);
+});

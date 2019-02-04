@@ -4,14 +4,18 @@ require('codemirror/addon/edit/matchbrackets');
 
 const codeMirror = require('codemirror');
 const Responce = require('./Responce');
+const Console = require('./Console');
+const { looseEqual } = require('./util');
 
 
-const createExerciceNode = (text, startingCode) => {
+const createExerciceNode = (text, startingCode = '', startingHtml = '') => {
   const div = document.createElement('div');
   const textHtml = `
   <div class="exercice">
     <h1>${text.title} <span></span></h1>
     <p>${text.text}</p>
+    <div class="document">${startingHtml}</div>
+    <div class="console"></div>
     <textarea>${startingCode}</textarea>
   </div>
   `;
@@ -21,20 +25,29 @@ const createExerciceNode = (text, startingCode) => {
 
 
 class Exercice {
-  constructor(parentNode, renderObject, startingCode, expected) {
-    this.expected = expected;
-    this.parentNode = parentNode;
-    this.me = createExerciceNode(renderObject, startingCode);
-    this.expectedResponce = new Responce(this.expected);
+  constructor(obj) {
+    this.expected = obj.expected;
+    this.parentNode = obj.parentNode;
+    this.me = createExerciceNode(obj.renderObject, obj.startingCode, obj.startingHtml);
+    this.expectedResponce = new Responce(obj.expected);
     this.solved = false;
+
+    // console stuf
+
+    this.console = new Console();
+    this.consoleElement = this.me.querySelector('.console');
+    this.prevLogs = [];
+    this.fakeDocument = this.me.querySelector('.document');
     // append stuf
     this.parentNode.appendChild(this.me);
+    this.console.on(this._renderLogs.bind(this)); // eslint-disable-line
     this.codeMirror = codeMirror.fromTextArea(this.me.querySelector('textarea'), {
       lineNumbers: true,
       mode: 'javascript',
       theme: 'one-dark',
     });
     this.codeMirror.on('cursorActivity', this._mirrorChange.bind(this)); // eslint-disable-line
+    this.codeMirror.setSize(null, 500);
   }
 
   // / available events
@@ -80,18 +93,34 @@ class Exercice {
     }`;
     let res = {};
     try {
-      res = Function('Rule', codeToExecute)(); // eslint-disable-line
+      res = Function('console','document', codeToExecute)(this.console, this.fakeDocument); // eslint-disable-line
       if (this.expectedResponce.equqls(res)) {
         this.emit('solve');
       } else if (this.solved) {
         this.emit('unsolve');
       }
-    } catch (_) {} // eslint-disable-line
+    } catch (_) {console.log(_)} // eslint-disable-line
+    this.console.empty();
   }
 
   on(str, f) {
     if (this[str]) {
       this[str] = f.bind(this, [this]);
+    }
+  }
+
+  _renderLogs(logs) {
+    if (!looseEqual(logs)) {
+      this.consoleElement.innerHTML = logs.map(log => `<div class=${log.type}>&gt; ${log.log}</div>`).join('');
+    }
+    this.prevLogs = [...logs];
+  }
+
+  renderState(state) {
+    if (state) {
+      this.me.querySelector('h1>span').classList.add('solved');
+    } else {
+      this.me.querySelector('h1>span').classList.remove('solved');
     }
   }
 }

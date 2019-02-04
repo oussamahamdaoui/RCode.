@@ -7,7 +7,7 @@ module.exports = better({
       [Object.prototype.hasOwnProperty.call(new Obj(), 'type'), true],
     ],
   },
-  startWith: '',
+  startingCode: '',
   text: {
     fr: {
       title: 'Cree une class',

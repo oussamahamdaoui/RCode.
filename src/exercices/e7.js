@@ -4,7 +4,7 @@ module.exports = better({
   expexted: {
     sum: f => [[f(123, 1, 2, 3, 5), 134]],
   },
-  startWith: '',
+  startingCode: '',
   text: {
     fr: {
       title: 'Ecrire une fonction',

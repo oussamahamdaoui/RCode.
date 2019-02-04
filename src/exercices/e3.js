@@ -5,7 +5,7 @@ module.exports = better({
     x: 20,
     y: 2,
   },
-  startWith: 'let x = 20',
+  startingCode: 'let x = 20',
   text: {
     fr: {
       title: 'Assignier a une varribale',

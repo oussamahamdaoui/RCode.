@@ -4,7 +4,7 @@ module.exports = better({
   expexted: {
     x: [],
   },
-  startWith: '',
+  startingCode: '',
   text: {
     fr: {
       title: 'Cree un tableau',

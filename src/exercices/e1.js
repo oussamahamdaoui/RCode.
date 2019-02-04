@@ -4,7 +4,7 @@ module.exports = better({
   expexted: {
     x: 1,
   },
-  startWith: '',
+  startingCode: '',
   text: {
     fr: {
       title: 'Cree une variable',

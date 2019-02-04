@@ -2,15 +2,16 @@ const better = require('./../toBetterExercice');
 
 module.exports = better({
   expexted: {
-    animal: () => [
-      [true, true],
+    animal: F => [
+      [new F('me', 'me').toString(), 'My name is me and I am me'],
+      [new F('z', 'me').toString(), 'My name is z and I am me'],
     ],
   },
-  startWith: '',
+  startingCode: '',
   text: {
     fr: {
       title: 'Cree une class 2',
-      text: 'Cree la animal qui a les propriétés name et type et une methode toString qui retourne  `My name is (le nom) and I am (le type)`',
+      text: 'Cree la class animal qui a les propriétés name et type et une methode toString qui retourne  `My name is (le nom) and I am (le type)`',
     },
 
     en: {

@@ -4,7 +4,7 @@ module.exports = better({
   expexted: {
     i: 6,
   },
-  startWith: 'const table = [1,9,8,13,19,27,-1,38,6,22];',
+  startingCode: 'const table = [1,9,8,13,19,27,-1,38,6,22];',
   text: {
     fr: {
       title: 'Parcourir un tableau 2',
