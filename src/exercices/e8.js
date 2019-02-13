@@ -7,11 +7,6 @@ module.exports = better({
   startingCode: 'const table = [1,9,8,13,19,27,38,6,22];',
   maxChars: 77,
   text: {
-    fr: {
-      title: 'Ecrire une fonction avec des parametres',
-      text: 'Ecrivez la fonction getMax qui retourne la valeur maximale d\'un tableau',
-    },
-
     en: {
       title: 'Write a function with parameters',
       text: 'Write the function getMax witch returns the maximum value of a list',

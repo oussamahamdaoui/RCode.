@@ -9,11 +9,6 @@ module.exports = better({
   },
   startingCode: '',
   text: {
-    fr: {
-      title: 'Cree une class',
-      text: 'Cree la animal qui a les propriétés name et type',
-    },
-
     en: {
       title: 'Create a class',
       text: 'Create the class animal which has the proprietys name and type',
