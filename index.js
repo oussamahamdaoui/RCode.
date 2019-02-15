@@ -2,10 +2,12 @@
 const Exercice = require('./src/Exercice');
 const exercices = require('./src/exercices');
 const Saver = require('./src/Saver');
+const Timer = require('./src/Timer');
 const { $, scrollIt } = require('./src/util');
 
 const e = [];
 const saver = new Saver();
+const timer = new Timer();
 
 
 const exercieParent = $('#exercices');
@@ -44,7 +46,7 @@ exercices.forEach((ex, i) => {
       forbidenPattern: ex.forbidenPattern,
     });
   }
-  exercice.on('solve', updateScore);
+  exercice.on('solve', () => { updateScore(); timer.add(100); });
   exercice.on('unsolve', updateScore);
   e.push(exercice);
 });
@@ -53,4 +55,5 @@ updateScore();
 
 $('.header>div>button').addEventListener('click', () => {
   scrollIt($('.container>div')[0], 500, 'easeInOutQuart');
+  timer.start();
 });

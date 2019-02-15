@@ -3,10 +3,12 @@
 const Exercice = require('./src/Exercice');
 const exercices = require('./src/exercices');
 const Saver = require('./src/Saver');
+const Timer = require('./src/Timer');
 const { $, scrollIt } = require('./src/util');
 
 const e = [];
 const saver = new Saver();
+const timer = new Timer();
 
 
 const exercieParent = $('#exercices');
@@ -45,7 +47,7 @@ exercices.forEach((ex, i) => {
       forbidenPattern: ex.forbidenPattern,
     });
   }
-  exercice.on('solve', updateScore);
+  exercice.on('solve', () => { updateScore(); timer.add(100); });
   exercice.on('unsolve', updateScore);
   e.push(exercice);
 });
@@ -54,9 +56,10 @@ updateScore();
 
 $('.header>div>button').addEventListener('click', () => {
   scrollIt($('.container>div')[0], 500, 'easeInOutQuart');
+  timer.start();
 });
 
-},{"./src/Exercice":7,"./src/Saver":10,"./src/exercices":11,"./src/util":26}],2:[function(require,module,exports){
+},{"./src/Exercice":7,"./src/Saver":10,"./src/Timer":11,"./src/exercices":12,"./src/util":27}],2:[function(require,module,exports){
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: https://codemirror.net/LICENSE
 
@@ -11180,8 +11183,6 @@ class Exercice {
   }
 
 
-  // ////
-
   emit(func) {
     const underscorised = `_${func}`;
     this[underscorised]();
@@ -11213,10 +11214,8 @@ class Exercice {
       res = Function(...nameSpaceKeys, codeToExecute)(...nameSpace); // eslint-disable-line
       if (this.expectedResponce.equqls(res)
       && e.getValue().length <= this.maxChars
-      && e.getValue().indexOf(this.forbidenPattern) === -1) {
+      && e.getValue().indexOf(this.forbidenPattern) === -1 && this.solved === false) {
         this.emit('solve');
-      } else if (this.solved) {
-        this.emit('unsolve');
       }
     } catch (_) {console.log(_)} // eslint-disable-line
     this.console.empty();
@@ -11251,7 +11250,7 @@ class Exercice {
 
 module.exports = Exercice;
 
-},{"./Console":6,"./Responce":9,"./textConsts":24,"./util":26,"codemirror":4,"codemirror/addon/edit/closebrackets":2,"codemirror/addon/edit/matchbrackets":3,"codemirror/mode/javascript/javascript":5}],8:[function(require,module,exports){
+},{"./Console":6,"./Responce":9,"./textConsts":25,"./util":27,"codemirror":4,"codemirror/addon/edit/closebrackets":2,"codemirror/addon/edit/matchbrackets":3,"codemirror/mode/javascript/javascript":5}],8:[function(require,module,exports){
 const { isFunction } = require('./util');
 
 class Lang {
@@ -11272,7 +11271,7 @@ class Lang {
 
 module.exports = Lang;
 
-},{"./util":26}],9:[function(require,module,exports){
+},{"./util":27}],9:[function(require,module,exports){
 const {
   looseEqual,
   isFunction,
@@ -11307,7 +11306,7 @@ class Responce {
 
 module.exports = Responce;
 
-},{"./util":26}],10:[function(require,module,exports){
+},{"./util":27}],10:[function(require,module,exports){
 const STORAGE_KEY = 'ex';
 class Saver {
   constructor() {
@@ -11335,6 +11334,48 @@ class Saver {
 module.exports = Saver;
 
 },{}],11:[function(require,module,exports){
+const { $ } = require('./util');
+
+class Timer {
+  constructor(startTime = 100) {
+    this.left = startTime;
+    this.doneAction = () => {};
+    this.interval = null;
+  }
+
+  start() {
+    if (this.interval) return;
+    this.interval = setInterval(() => {
+      this.updateTimer();
+    }, 1000);
+  }
+
+  add(x) {
+    this.left += x;
+  }
+
+
+  stop() {
+    clearInterval(this.interval);
+  }
+
+  done(f) {
+    this.doneAction = f;
+  }
+
+  updateTimer() {
+    $('.timer').innerText = `${this.left}s`;
+    if (this.left > 0) {
+      this.left -= 1;
+    } else {
+      this.doneAction();
+    }
+  }
+}
+
+module.exports = Timer;
+
+},{"./util":27}],12:[function(require,module,exports){
 const e1 = require('./exercices/e1');
 const e2 = require('./exercices/e2');
 const e3 = require('./exercices/e3');
@@ -11365,7 +11406,7 @@ module.exports = [
   e12,
 ];
 
-},{"./exercices/e1":12,"./exercices/e10":13,"./exercices/e11":14,"./exercices/e12":15,"./exercices/e2":16,"./exercices/e3":17,"./exercices/e4":18,"./exercices/e5":19,"./exercices/e6":20,"./exercices/e7":21,"./exercices/e8":22,"./exercices/e9":23}],12:[function(require,module,exports){
+},{"./exercices/e1":13,"./exercices/e10":14,"./exercices/e11":15,"./exercices/e12":16,"./exercices/e2":17,"./exercices/e3":18,"./exercices/e4":19,"./exercices/e5":20,"./exercices/e6":21,"./exercices/e7":22,"./exercices/e8":23,"./exercices/e9":24}],13:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11386,7 +11427,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],13:[function(require,module,exports){
+},{"./../toBetterExercice":26}],14:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11405,7 +11446,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],14:[function(require,module,exports){
+},{"./../toBetterExercice":26}],15:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11424,7 +11465,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],15:[function(require,module,exports){
+},{"./../toBetterExercice":26}],16:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11447,7 +11488,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],16:[function(require,module,exports){
+},{"./../toBetterExercice":26}],17:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11468,26 +11509,28 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],17:[function(require,module,exports){
+},{"./../toBetterExercice":26}],18:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
   expexted: {
-    x: 20,
-    y: 2,
+    arrange: f => [
+      [f([1, 2, 3]), 321],
+      [f([11, 20, 3]), 32011],
+    ],
   },
-  startingCode: 'let x = 20',
+  startingCode: '',
   maxChars: 21,
   text: {
     en: {
       title: 'Assignie to var',
-      text: `Given a list of non negative integers, arrange them such that they form the largest number.
+      text: `Write a function arrange that returns a number given a list of non negative integers, arranged such that they form the largest number.
       For example, given [3, 39, 34, 5, 9], the largest formed number is 9539343.`,
     },
   },
 });
 
-},{"./../toBetterExercice":25}],18:[function(require,module,exports){
+},{"./../toBetterExercice":26}],19:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11505,7 +11548,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],19:[function(require,module,exports){
+},{"./../toBetterExercice":26}],20:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11522,7 +11565,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],20:[function(require,module,exports){
+},{"./../toBetterExercice":26}],21:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11539,7 +11582,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],21:[function(require,module,exports){
+},{"./../toBetterExercice":26}],22:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11556,7 +11599,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],22:[function(require,module,exports){
+},{"./../toBetterExercice":26}],23:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11573,7 +11616,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],23:[function(require,module,exports){
+},{"./../toBetterExercice":26}],24:[function(require,module,exports){
 const better = require('./../toBetterExercice');
 
 module.exports = better({
@@ -11589,7 +11632,7 @@ module.exports = better({
   },
 });
 
-},{"./../toBetterExercice":25}],24:[function(require,module,exports){
+},{"./../toBetterExercice":26}],25:[function(require,module,exports){
 const Lang = require('./Lang');
 
 const USE_ONLY = new Lang({
@@ -11600,7 +11643,7 @@ module.exports = {
   USE_ONLY,
 };
 
-},{"./Lang":8}],25:[function(require,module,exports){
+},{"./Lang":8}],26:[function(require,module,exports){
 const Lang = require('./Lang');
 
 function toBetterExercice(e) {
@@ -11636,7 +11679,7 @@ function toBetterExercice(e) {
 
 module.exports = toBetterExercice;
 
-},{"./Lang":8}],26:[function(require,module,exports){
+},{"./Lang":8}],27:[function(require,module,exports){
 const isArray = arr => Array.isArray(arr);
 
 const isString = str => typeof str === 'string' || str instanceof String;
@@ -11728,7 +11771,7 @@ function scrollIt(destination, duration = 200, easing = 'linear', callback) {
     ? documentHeight - windowHeight : destinationOffset);
 
   if ('requestAnimationFrame' in window === false) {
-    window.scroll(0, destinationOffsetToScroll);
+    window.scroll(0, destinationOffsetToScroll - 70);
     if (callback) {
       callback();
     }
