@@ -27,6 +27,8 @@ exercices.forEach((ex, i) => {
       startithHtml: ex.startithHtml,
       expected: ex.expexted,
       maxChars: ex.maxChars,
+      nameSpace: ex.nameSpace,
+      forbidenPattern: ex.forbidenPattern,
     });
     exercice.solved = savedValues.solved;
     exercice.renderState(savedValues.solved);
@@ -38,6 +40,8 @@ exercices.forEach((ex, i) => {
       startithHtml: ex.startithHtml,
       expected: ex.expexted,
       maxChars: ex.maxChars,
+      nameSpace: ex.nameSpace,
+      forbidenPattern: ex.forbidenPattern,
     });
   }
   exercice.on('solve', updateScore);

@@ -38,6 +38,8 @@ class Exercice {
       obj.startingCode,
       obj.startingHtml,
       obj.maxChars);
+    this.nameSpace = obj.nameSpace;
+    this.forbidenPattern = obj.forbidenPattern;
     this.expectedResponce = new Responce(obj.expected);
     this.solved = false;
 
@@ -93,6 +95,8 @@ class Exercice {
   }
 
   _mirrorChange(e) {
+    const nameSpaceKeys = ['console', 'document', ...Object.keys(this.nameSpace)];
+    const nameSpace = [this.console, this.fakeDocument, ...Object.values(this.nameSpace)];
     const codeToExecute = `
     'use strict'
     ${e.getValue()}
@@ -101,8 +105,10 @@ class Exercice {
     }`;
     let res = {};
     try {
-      res = Function('console','document', codeToExecute)(this.console, this.fakeDocument); // eslint-disable-line
-      if (this.expectedResponce.equqls(res) && e.getValue().length <= this.maxChars) {
+      res = Function(...nameSpaceKeys, codeToExecute)(...nameSpace); // eslint-disable-line
+      if (this.expectedResponce.equqls(res)
+      && e.getValue().length <= this.maxChars
+      && e.getValue().indexOf(this.forbidenPattern) === -1) {
         this.emit('solve');
       } else if (this.solved) {
         this.emit('unsolve');

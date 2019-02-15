@@ -2,15 +2,18 @@ const better = require('./../toBetterExercice');
 
 module.exports = better({
   expexted: {
-    x: 1,
+    rev: f => [
+      [f([1, 2, 3]), [3, 2, 1]],
+      [f([1, 8, 12]), [12, 8, 1]],
+    ],
   },
   startingCode: '',
-  maxChars: 10,
+  maxChars: 200,
+  forbidenPattern: /\.reverce\(/,
   text: {
     en: {
-      title: 'Create a variable',
-      text: 'crate the variable x equals 1',
-      useOnly: 'Use only :',
+      title: 'Reverce a table',
+      text: 'Create a function rev that returns a new reversed a table. You can not use Array.reverce()',
     },
   },
 });

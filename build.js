@@ -28,6 +28,8 @@ exercices.forEach((ex, i) => {
       startithHtml: ex.startithHtml,
       expected: ex.expexted,
       maxChars: ex.maxChars,
+      nameSpace: ex.nameSpace,
+      forbidenPattern: ex.forbidenPattern,
     });
     exercice.solved = savedValues.solved;
     exercice.renderState(savedValues.solved);
@@ -39,6 +41,8 @@ exercices.forEach((ex, i) => {
       startithHtml: ex.startithHtml,
       expected: ex.expexted,
       maxChars: ex.maxChars,
+      nameSpace: ex.nameSpace,
+      forbidenPattern: ex.forbidenPattern,
     });
   }
   exercice.on('solve', updateScore);
@@ -11139,6 +11143,8 @@ class Exercice {
       obj.startingCode,
       obj.startingHtml,
       obj.maxChars);
+    this.nameSpace = obj.nameSpace;
+    this.forbidenPattern = obj.forbidenPattern;
     this.expectedResponce = new Responce(obj.expected);
     this.solved = false;
 
@@ -11194,6 +11200,8 @@ class Exercice {
   }
 
   _mirrorChange(e) {
+    const nameSpaceKeys = ['console', 'document', ...Object.keys(this.nameSpace)];
+    const nameSpace = [this.console, this.fakeDocument, ...Object.values(this.nameSpace)];
     const codeToExecute = `
     'use strict'
     ${e.getValue()}
@@ -11202,8 +11210,10 @@ class Exercice {
     }`;
     let res = {};
     try {
-      res = Function('console','document', codeToExecute)(this.console, this.fakeDocument); // eslint-disable-line
-      if (this.expectedResponce.equqls(res) && e.getValue().length <= this.maxChars) {
+      res = Function(...nameSpaceKeys, codeToExecute)(...nameSpace); // eslint-disable-line
+      if (this.expectedResponce.equqls(res)
+      && e.getValue().length <= this.maxChars
+      && e.getValue().indexOf(this.forbidenPattern) === -1) {
         this.emit('solve');
       } else if (this.solved) {
         this.emit('unsolve');
@@ -11338,6 +11348,7 @@ const e10 = require('./exercices/e10');
 const e11 = require('./exercices/e11');
 const e12 = require('./exercices/e12');
 
+Array.prototype.reverse = () => {};
 
 module.exports = [
   e1,
@@ -11359,21 +11370,18 @@ const better = require('./../toBetterExercice');
 
 module.exports = better({
   expexted: {
-    x: 1,
+    rev: f => [
+      [f([1, 2, 3]), [3, 2, 1]],
+      [f([1, 8, 12]), [12, 8, 1]],
+    ],
   },
   startingCode: '',
-  maxChars: 10,
+  maxChars: 200,
+  forbidenPattern: /\.reverce\(/,
   text: {
-    fr: {
-      title: 'Cree une variable',
-      text: 'Cree la variable x egale a 1',
-      useOnly: 'Utiliser seulement:',
-    },
-
     en: {
-      title: 'Create a variable',
-      text: 'crate the variable x equals 1',
-      useOnly: 'Use only :',
+      title: 'Reverce a table',
+      text: 'Create a function rev that returns a new reversed a table. You can not use Array.reverce()',
     },
   },
 });
@@ -11390,11 +11398,6 @@ module.exports = better({
   },
   startingCode: '',
   text: {
-    fr: {
-      title: 'Cree une class',
-      text: 'Cree la animal qui a les propriétés name et type',
-    },
-
     en: {
       title: 'Create a class',
       text: 'Create the class animal which has the proprietys name and type',
@@ -11414,11 +11417,6 @@ module.exports = better({
   },
   startingCode: '',
   text: {
-    fr: {
-      title: 'Cree une class 2',
-      text: 'Cree la class animal qui a les propriétés name et type et une methode toString qui retourne  `My name is (le nom) and I am (le type)`',
-    },
-
     en: {
       title: 'Create a class 2',
       text: 'Create the class animal which has the proprietys name and type and a methode toSreing which returns `My name is (the name) and I am (the type) `',
@@ -11440,16 +11438,9 @@ module.exports = better({
   startingCode: '',
   maxChars: 70,
   text: {
-    fr: {
-      title: 'Cree une fonction LVL 2',
-      text: `Cree la fonction 'bounded(borneSup, borneInf, val)' qui retourne la valeur bornée ex:
-      bounded(5, 10, 15) = 10, bounded(5, 10, 1) = 5, bounded(5, 10, 7) = 7
-      `,
-    },
-
     en: {
       title: 'Create a function LVL 2',
-      text: `Create the function 'bounded(upperBound, bottomBound, value)' which returns the bounded value ex:
+      text: `Create the function 'bounded(lowerBound, upperBound, value)' which returns the bounded value ex:
       bounded(5, 10, 15) = 10, bounded(5, 10, 1) = 5, bounded(5, 10, 7) = 7
       `,
     },
@@ -11461,18 +11452,18 @@ const better = require('./../toBetterExercice');
 
 module.exports = better({
   expexted: {
-    x: 1,
+    order: f => [
+      [f([30, 15, 13], (a, b) => a - b), [13, 15, 30]],
+      [f([1, 2, 3], (a, b) => b - a), [3, 2, 1]],
+    ],
   },
-  startingCode: 'let x = 0',
+  startingCode: '',
   text: {
-    fr: {
-      title: 'Modifier une varriable',
-      text: 'Ajouter un a x',
-    },
-
     en: {
-      title: 'Change a variable',
-      text: 'Add one to x',
+      title: 'Order list',
+      text: `Create a function order that reterns a new orderd list. The function takes as argument a list and a comarason function 
+      which compares two elements of the list and returns a positive number if the first element is greater than the second, 
+      a negative number if the first element is smaller than the second and 0 if they are equal. You can not use Array.sort()`,
     },
   },
 });
@@ -11488,14 +11479,10 @@ module.exports = better({
   startingCode: 'let x = 20',
   maxChars: 21,
   text: {
-    fr: {
-      title: 'Assignier a une varribale',
-      text: 'Assigner la valleur de x divisé par 10 a y',
-    },
-
     en: {
       title: 'Assignie to var',
-      text: 'Assignie x divided by 10 to y',
+      text: `Given a list of non negative integers, arrange them such that they form the largest number.
+      For example, given [3, 39, 34, 5, 9], the largest formed number is 9539343.`,
     },
   },
 });
@@ -11510,12 +11497,6 @@ module.exports = better({
   startingCode: '',
   maxChars: 13,
   text: {
-    fr: {
-      title: 'Cree un tableau',
-      text: 'Creer le tableau x',
-      useOnly: 'Utiliez seulement:',
-    },
-
     en: {
       title: 'Create an array',
       text: 'create the array x',
@@ -11534,11 +11515,6 @@ module.exports = better({
   maxChars: 69,
   startingCode: 'const table = [1,9,8,13,19,27,38,6,22];',
   text: {
-    fr: {
-      title: 'Parcourir un tableau',
-      text: 'Trouver la valeur max dans le tableau et la stoker dans une variable max',
-    },
-
     en: {
       title: 'Iterate array over arrays',
       text: 'Find the max value of table table and store it in a variable called max',
@@ -11556,11 +11532,6 @@ module.exports = better({
   maxChars: 85,
   startingCode: 'const table = [1,9,8,13,19,27,-1,38,6,22];',
   text: {
-    fr: {
-      title: 'Parcourir un tableau 2',
-      text: 'Trouver l\'index i de la valeur minimale',
-    },
-
     en: {
       title: 'Iterate over arrays 2',
       text: 'Find the index of the minimal value of table and store it in a variable called i',
@@ -11578,11 +11549,6 @@ module.exports = better({
   startingCode: '',
   maxChars: 52,
   text: {
-    fr: {
-      title: 'Ecrire une fonction',
-      text: 'Créer la fontion sum qui retourne la somme de N nombres',
-    },
-
     en: {
       title: 'Iterate array list',
       text: 'Create a function sum witch returns the sum of N numbers',
@@ -11600,11 +11566,6 @@ module.exports = better({
   startingCode: 'const table = [1,9,8,13,19,27,38,6,22];',
   maxChars: 77,
   text: {
-    fr: {
-      title: 'Ecrire une fonction avec des parametres',
-      text: 'Ecrivez la fonction getMax qui retourne la valeur maximale d\'un tableau',
-    },
-
     en: {
       title: 'Write a function with parameters',
       text: 'Write the function getMax witch returns the maximum value of a list',
@@ -11621,11 +11582,6 @@ module.exports = better({
   },
   startingCode: '',
   text: {
-    fr: {
-      title: 'Cree un objet',
-      text: 'Cree l\'objet animal qui a les propriétés name et type',
-    },
-
     en: {
       title: 'Create an object',
       text: 'Create the oject animal which has the proprietys name and type',
@@ -11637,7 +11593,6 @@ module.exports = better({
 const Lang = require('./Lang');
 
 const USE_ONLY = new Lang({
-  fr: maxChars => `Utiliser seulment ${maxChars} characteres`,
   en: maxChars => `Use only ${maxChars} characters`,
 });
 
@@ -11674,6 +11629,8 @@ function toBetterExercice(e) {
     text: ret,
     startingCode: e.startingCode,
     maxChars: e.maxChars || Infinity,
+    nameSpace: e.nameSpace || {},
+    forbidenPattern: e.forbidenPattern || new RegExp(),
   };
 }
 

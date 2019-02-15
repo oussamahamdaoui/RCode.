@@ -26,6 +26,8 @@ function toBetterExercice(e) {
     text: ret,
     startingCode: e.startingCode,
     maxChars: e.maxChars || Infinity,
+    nameSpace: e.nameSpace || {},
+    forbidenPattern: e.forbidenPattern || new RegExp(),
   };
 }
 

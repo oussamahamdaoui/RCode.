@@ -11,6 +11,7 @@ const e10 = require('./exercices/e10');
 const e11 = require('./exercices/e11');
 const e12 = require('./exercices/e12');
 
+Array.prototype.reverse = () => {};
 
 module.exports = [
   e1,

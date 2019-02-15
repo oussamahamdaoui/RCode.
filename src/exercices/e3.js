@@ -10,7 +10,8 @@ module.exports = better({
   text: {
     en: {
       title: 'Assignie to var',
-      text: 'Assignie x divided by 10 to y',
+      text: `Given a list of non negative integers, arrange them such that they form the largest number.
+      For example, given [3, 39, 34, 5, 9], the largest formed number is 9539343.`,
     },
   },
 });
