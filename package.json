@@ -5,20 +5,21 @@
   "main": "index.js",
   "dependencies": {
     "codemirror": "^5.43.0",
-    "highlight.js": "^9.13.1"
+    "live-server": "^1.2.1"
   },
   "devDependencies": {
     "browserify": "^16.2.3",
-    "watchify": "^3.11.0",
-    "eslint": "^5.9.0",
+    "eslint": "^5.14.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^22.1.0",
-    "jest": "^23.6.0"
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "jest": "^24.1.0",
+    "watchify": "^3.11.0"
   },
   "scripts": {
     "test": "jest",
-    "build": "npx watchify index.js -o build.js"
+    "build": "npx browserify index.js -o build.js",
+    "dev": "node liveserver && npx watchify index.js -o build.js"
   },
   "author": "Oussama Hamdaoui <oussamahamdaoui@live.fr>",
   "license": "MIT"
