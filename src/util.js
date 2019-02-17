@@ -89,7 +89,7 @@ function scrollIt(destination, duration = 200, easing = 'linear', callback) {
     ? documentHeight - windowHeight : destinationOffset);
 
   if ('requestAnimationFrame' in window === false) {
-    window.scroll(0, destinationOffsetToScroll);
+    window.scroll(0, destinationOffsetToScroll - 70);
     if (callback) {
       callback();
     }

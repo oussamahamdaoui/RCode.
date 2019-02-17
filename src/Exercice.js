@@ -75,8 +75,6 @@ class Exercice {
   }
 
 
-  // ////
-
   emit(func) {
     const underscorised = `_${func}`;
     this[underscorised]();
@@ -108,10 +106,8 @@ class Exercice {
       res = Function(...nameSpaceKeys, codeToExecute)(...nameSpace); // eslint-disable-line
       if (this.expectedResponce.equqls(res)
       && e.getValue().length <= this.maxChars
-      && e.getValue().indexOf(this.forbidenPattern) === -1) {
+      && e.getValue().indexOf(this.forbidenPattern) === -1 && this.solved === false) {
         this.emit('solve');
-      } else if (this.solved) {
-        this.emit('unsolve');
       }
     } catch (_) {console.log(_)} // eslint-disable-line
     this.console.empty();
